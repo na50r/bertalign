@@ -28,8 +28,8 @@ class Bertalign:
         
         src = clean_text(src)
         tgt = clean_text(tgt)
-        src_lang = LANG.ISO.get(src_lang) or LANG.ISO[detect_lang(src)]
-        tgt_lang = LANG.ISO.get(tgt_lang) or LANG.ISO[detect_lang(tgt)]
+        src_lang = (src_lang in LANG.SPLITTER and src_lang) or detect_lang(src)
+        tgt_lang = (tgt_lang in LANG.SPLITTER and tgt_lang) or detect_lang(tgt)
         
         if is_split:
             src_sents = src.splitlines()
