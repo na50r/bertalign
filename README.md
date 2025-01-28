@@ -1,3 +1,9 @@
+# Purpose of Fork
+I am considering using Bertalign for a large scale machine translation evaluation project which requires me to align sentences of 11 European languages, similarly as done in [this paper](https://aclanthology.org/2005.mtsummit-papers.11.pdf). I adjusted parts of the code that did not work well for me, namely:
+* Replace `googletrans` with `langdetect` to avoid unused code
+* Allow users to provide language as an argument when performing alignment
+* Use `distiluse-base-multilingual-cased-v2` instead of `LaBSE` as for my project, I require it less languages to be supported. Ideally, this should be adjustable by the user as well though.
+
 # Bertalign
 
 An automatic mulitlingual sentence aligner.
