@@ -3,6 +3,7 @@ import numpy as np
 from bertalign import model
 from bertalign.corelib import *
 from bertalign.utils import *
+import json
 
 class Bertalign:
     def __init__(self,
@@ -87,6 +88,16 @@ class Bertalign:
             src_line = self._get_line(bead[0], self.src_sents)
             tgt_line = self._get_line(bead[1], self.tgt_sents)
             print(src_line + "\n" + tgt_line + "\n", file=file)
+
+    def save_jsonl(self, file=None):
+        assert file!=None, 'Provide an output path'
+        for bead in (self.result):
+            obj = dict()
+            obj['src'] = self._get_line(bead[0], self.src_sents)
+            obj['tgt'] = self._get_line(bead[1], self.tgt_sents)
+            obj['src_lang'] = self.src_lang
+            obj['tgt_lang'] = self.tgt_lang
+            print(json.dumps(obj), file=file)
 
     @staticmethod
     def _get_line(bead, lines):
