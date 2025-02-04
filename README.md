@@ -13,9 +13,9 @@ pip install -e bertalign/
 
 ## Installation on Google Colab
 ```
-git clone https://github.com/na50r/bertalign
-pip install -r bertalign/requirements_colab.txt && python3 install_faiss_colab.py 
-pip install -e bertalign/
+!git clone https://github.com/na50r/bertalign
+!pip install -r bertalign/requirements_colab.txt && python3 install_faiss_colab.py 
+!pip install -e bertalign/
 ```
 
 ## Installation on Google Colab

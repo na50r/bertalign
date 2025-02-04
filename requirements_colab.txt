@@ -1,5 +1,4 @@
 numba==0.61.0
-faiss-cpu==1.9.0
 langdetect==1.0.9
 sentence-splitter==1.4
 sentence-transformers==3.4.1
