@@ -1,0 +1,13 @@
+LICENCE
+README.md
+setup.py
+Bertalign.egg-info/PKG-INFO
+Bertalign.egg-info/SOURCES.txt
+Bertalign.egg-info/dependency_links.txt
+Bertalign.egg-info/top_level.txt
+bertalign/__init__.py
+bertalign/aligner.py
+bertalign/corelib.py
+bertalign/encoder.py
+bertalign/eval.py
+bertalign/utils.py
