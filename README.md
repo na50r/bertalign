@@ -8,7 +8,7 @@ I am considering using Bertalign for a large scale machine translation evaluatio
 ```
 git clone https://github.com/na50r/bertalign
 pip install -r bertalign/requirements.txt 
-pip install -e bertalign/
+pip install bertalign/
 ```
 
 ## Installation on Google Colab
@@ -22,7 +22,7 @@ condacolab.install()
 ```
 ```
 !mamba install -c pytorch faiss-gpu
-!pip install -e bertalign/
+!pip install bertalign/
 ```
 
 ### Alternatively, you can omit the alignment and just use Colab to get the embeddings.
