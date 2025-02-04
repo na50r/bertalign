@@ -18,6 +18,7 @@ class Bertalign:
                  is_split=False,
                  src_lang=None,
                  tgt_lang=None,
+                 load_path=None,
                ):
         
         self.max_align = max_align
@@ -42,12 +43,20 @@ class Bertalign:
         src_num = len(src_sents)
         tgt_num = len(tgt_sents)
         
-        print("Source language: {}, Number of sentences: {}".format(src_lang, src_num))
-        print("Target language: {}, Number of sentences: {}".format(tgt_lang, tgt_num))
+        if load_path == None:
+            print("Source language: {}, Number of sentences: {}".format(src_lang, src_num))
+            print("Target language: {}, Number of sentences: {}".format(tgt_lang, tgt_num))
 
-        print("Embedding source and target text using {} ...".format(model.model_name))
-        src_vecs, src_lens = model.transform(src_sents, max_align - 1)
-        tgt_vecs, tgt_lens = model.transform(tgt_sents, max_align - 1)
+            print("Embedding source and target text using {} ...".format(model.model_name))
+            src_vecs, src_lens = model.transform(src_sents, max_align - 1)
+            tgt_vecs, tgt_lens = model.transform(tgt_sents, max_align - 1)
+        
+        else:
+            loaded = np.load(load_path)
+            src_vecs = loaded['src_vecs']
+            tgt_vecs = loaded['tgt_vecs']
+            src_lens = loaded['src_lens']
+            tgt_lens = loaded['tgt_lens']
 
         char_ratio = np.sum(src_lens[0,]) / np.sum(tgt_lens[0,])
 
@@ -62,6 +71,14 @@ class Bertalign:
         self.char_ratio = char_ratio
         self.src_vecs = src_vecs
         self.tgt_vecs = tgt_vecs
+    
+    def store_embeddings(self, path):
+        np.savez(path, 
+                 src_vecs=self.src_vecs, 
+                 tgt_vecs=self.tgt_vecs,
+                 src_lens=self.src_lens,
+                 tgt_lens=self.tgt_lens
+                 )
         
     def align_sents(self):
 

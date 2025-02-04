@@ -1,8 +1,0 @@
-Metadata-Version: 2.2
-Name: Bertalign
-Version: 0.1.1
-Summary: An automatic mulitlingual sentence aligner.
-Home-page: https://github.com/bfsujason/bertalign
-License-File: LICENCE
-Dynamic: home-page
-Dynamic: summary
