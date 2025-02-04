@@ -14,19 +14,7 @@ pip install -e bertalign/
 ## Installation on Google Colab
 ```
 !git clone https://github.com/na50r/bertalign
-!pip install -r bertalign/requirements_colab.txt && python3 install_faiss_colab.py 
-!pip install -e bertalign/
-```
-
-## Installation on Google Colab
-The original code uses faiss-gpu for alignment. This can be achieved on colab by doing the following:
-```
-!git clone https://github.com/na50r/bertalign
-!pip install -r bertalign/requirements.txt 
-!pip uninstall faiss-cpu 
-``` 
-```
-!pip install -q condacolab
+!pip install -r bertalign/requirements_colab.txt 
 ```
 ```python
 import condacolab
@@ -34,6 +22,7 @@ condacolab.install()
 ```
 ```
 !mamba install -c pytorch faiss-gpu
+!pip install -e bertalign/
 ```
 
 ### Alternatively, you can omit the alignment and just use Colab to get the embeddings.
