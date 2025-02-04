@@ -4,6 +4,58 @@ I am considering using Bertalign for a large scale machine translation evaluatio
 * Allow users to provide language as an argument when performing alignment
 * Use `distiluse-base-multilingual-cased-v2` instead of `LaBSE` as for my project, I require it less languages to be supported. Ideally, this should be adjustable by the user as well though.
 
+## Installation locally:
+```
+git clone https://github.com/na50r/bertalign
+pip install -r bertalign/requirements.txt 
+pip install -e bertalign/
+```
+
+## Installation on Google Colab
+```
+git clone https://github.com/na50r/bertalign
+pip install -r bertalign/requirements_colab.txt && python3 install_faiss_colab.py 
+pip install -e bertalign/
+```
+
+## Installation on Google Colab
+The original code uses faiss-gpu for alignment. This can be achieved on colab by doing the following:
+```
+!git clone https://github.com/na50r/bertalign
+!pip install -r bertalign/requirements.txt 
+!pip uninstall faiss-cpu 
+``` 
+```
+!pip install -q condacolab
+```
+```python
+import condacolab
+condacolab.install()
+```
+```
+!mamba install -c pytorch faiss-gpu
+```
+
+### Alternatively, you can omit the alignment and just use Colab to get the embeddings.
+```
+# Do this in Colab
+with open('EN_TMP.txt', 'r') as f:
+    REF = f.read()
+
+with open('EN_Trans1.txt', 'r') as f:
+    HYP = f.read()
+
+aligner = Bertalign(
+    src=REF, tgt=HYP, src_lang='en', tgt_lang='en')
+
+aligner.store_embeddings(path='EN_TMP_Trans1.npz')
+
+# Do this locally
+aligner = Bertalign(
+    src=REF, tgt=HYP, src_lang='en', tgt_lang='en', load_path='EN_TMP_Trans1.npz')
+```
+
+
 # Bertalign
 
 An automatic mulitlingual sentence aligner.
