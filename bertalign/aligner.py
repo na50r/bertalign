@@ -106,14 +106,15 @@ class Bertalign:
             tgt_line = self._get_line(bead[1], self.tgt_sents)
             print(src_line + "\n" + tgt_line + "\n", file=file)
 
-    def save_jsonl(self, file=None):
+    def save_jsonl(self, file=None, src_name='src', tgt_name='tgt', store_lang_info=True):
         assert file!=None, 'Provide an output path'
         for bead in (self.result):
             obj = dict()
             obj['src'] = self._get_line(bead[0], self.src_sents)
             obj['tgt'] = self._get_line(bead[1], self.tgt_sents)
-            obj['src_lang'] = self.src_lang
-            obj['tgt_lang'] = self.tgt_lang
+            if store_lang_info:
+                obj[f'{src_name}_lang'] = self.src_lang
+                obj[f'{tgt_name}_lang'] = self.tgt_lang
             print(json.dumps(obj), file=file)
 
     @staticmethod
