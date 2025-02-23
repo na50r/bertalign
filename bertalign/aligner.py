@@ -110,8 +110,8 @@ class Bertalign:
         assert file!=None, 'Provide an output path'
         for bead in (self.result):
             obj = dict()
-            obj['src'] = self._get_line(bead[0], self.src_sents)
-            obj['tgt'] = self._get_line(bead[1], self.tgt_sents)
+            obj[src_name] = self._get_line(bead[0], self.src_sents)
+            obj[tgt_name] = self._get_line(bead[1], self.tgt_sents)
             if store_lang_info:
                 obj[f'{src_name}_lang'] = self.src_lang
                 obj[f'{tgt_name}_lang'] = self.tgt_lang
