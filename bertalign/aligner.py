@@ -1,6 +1,6 @@
 import numpy as np
 
-from bertalign import model
+from bertalign import model as default_model
 from bertalign.corelib import *
 from bertalign.utils import *
 import json
@@ -19,6 +19,7 @@ class Bertalign:
                  src_lang=None,
                  tgt_lang=None,
                  load_path=None,
+                 model=None,
                ):
         
         self.max_align = max_align
@@ -27,6 +28,10 @@ class Bertalign:
         self.skip = skip
         self.margin = margin
         self.len_penalty = len_penalty
+        if model != None:
+            self.model = model
+        else:
+            self.model = default_model
         
         src = clean_text(src)
         tgt = clean_text(tgt)
@@ -47,9 +52,9 @@ class Bertalign:
             print("Source language: {}, Number of sentences: {}".format(src_lang, src_num))
             print("Target language: {}, Number of sentences: {}".format(tgt_lang, tgt_num))
 
-            print("Embedding source and target text using {} ...".format(model.model_name))
-            src_vecs, src_lens = model.transform(src_sents, max_align - 1)
-            tgt_vecs, tgt_lens = model.transform(tgt_sents, max_align - 1)
+            print("Embedding source and target text using {} ...".format(self.model.model_name))
+            src_vecs, src_lens = self.model.transform(src_sents, max_align - 1)
+            tgt_vecs, tgt_lens = self.model.transform(tgt_sents, max_align - 1)
         
         else:
             loaded = np.load(load_path)
