@@ -65,7 +65,54 @@ aligner = Bertalign(
 ```
 
 ## Switch Encoders
+```python
+from bertalign import Bertalign
+from bertalign import Encoder
 
+de = """
+Zwei Seelen wohnen, ach! in meiner Brust.
+So this is the heart of the matter!
+Ich bin der Geist, der stets verneint!
+"""
+
+en = """
+Two souls, alas! dwell in my breast.
+So this is the heart of the matter!
+Faust, innit
+I am the spirit that always denies!
+"""
+
+my_model = Encoder('LaBSE')
+aligner = Bertalign(
+        src=en, 
+        tgt=de,
+        src_lang='en',
+        tgt_lang='de',
+        )
+
+aligner.align_sents()
+aligner.print_sents()
+```
+```
+Source language: en, Number of sentences: 4
+Target language: de, Number of sentences: 3
+Embedding source and target text using distiluse-base-multilingual-cased-v2 ...
+Performing first-step alignment ...
+Performing second-step alignment ...
+Finished! Successfully aligned 4 en sentences to 3 de sentences
+
+Two souls, alas! dwell in my breast.
+Zwei Seelen wohnen, ach! in meiner Brust.
+
+So this is the heart of the matter!
+So this is the heart of the matter!
+
+Faust, innit
+
+
+I am the spirit that always denies!
+Ich bin der Geist, der stets verneint!
+```
 
 
 # Bertalign
