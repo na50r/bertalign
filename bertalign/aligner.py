@@ -76,15 +76,7 @@ class Bertalign:
         self.char_ratio = char_ratio
         self.src_vecs = src_vecs
         self.tgt_vecs = tgt_vecs
-    
-    def store_embeddings(self, path):
-        np.savez(path, 
-                 src_vecs=self.src_vecs, 
-                 tgt_vecs=self.tgt_vecs,
-                 src_lens=self.src_lens,
-                 tgt_lens=self.tgt_lens
-                 )
-        
+       
     def align_sents(self):
 
         print("Performing first-step alignment ...")
@@ -119,16 +111,14 @@ class Bertalign:
             tgt_line = self._get_line(bead[1], self.tgt_sents)
             print(src_line + "\n" + tgt_line + "\n", file=file)
 
-    def save_jsonl(self, file=None, src_name='src', tgt_name='tgt', store_lang_info=True):
-        assert file!=None, 'Provide an output path'
-        for bead in (self.result):
-            obj = dict()
-            obj[src_name] = self._get_line(bead[0], self.src_sents)
-            obj[tgt_name] = self._get_line(bead[1], self.tgt_sents)
-            if store_lang_info:
-                obj[f'{src_name}_lang'] = self.src_lang
-                obj[f'{tgt_name}_lang'] = self.tgt_lang
-            print(json.dumps(obj), file=file)
+    def save_jsonl(self, output_path=None, src_name='src', tgt_name='tgt'):
+        assert output_path != None, 'Provide an output path'
+        src_sents, tgt_sents = self.get_sents()
+
+        with open(output_path, 'w') as f:
+            for src, tgt in zip(src_sents, tgt_sents):
+                obj = {src_name : src, tgt_name : tgt}
+                print(json.dumps(obj), file=f)
 
     @staticmethod
     def _get_line(bead, lines):
