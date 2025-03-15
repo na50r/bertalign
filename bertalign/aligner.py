@@ -76,7 +76,15 @@ class Bertalign:
         self.char_ratio = char_ratio
         self.src_vecs = src_vecs
         self.tgt_vecs = tgt_vecs
-       
+
+    def store_embeddings(self, path):
+        np.savez(path, 
+                 src_vecs=self.src_vecs, 
+                 tgt_vecs=self.tgt_vecs,
+                 src_lens=self.src_lens,
+                 tgt_lens=self.tgt_lens
+                 )
+
     def align_sents(self):
 
         print("Performing first-step alignment ...")

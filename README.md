@@ -1,9 +1,21 @@
-# Purpose of Fork
-I am considering using Bertalign for a large scale machine translation evaluation project which requires me to align sentences of 11 European languages, similarly as done in [this paper](https://aclanthology.org/2005.mtsummit-papers.11.pdf). I adjusted parts of the code that did not work well for me, namely:
+# Fork
+I am considering using Bertalign for a large scale machine translation evaluation project which requires me to align sentences of 11 European languages, similar to  [this paper](https://aclanthology.org/2005.mtsummit-papers.11.pdf)
+
+In the paper the authors:
+1. Build Statistical Machine Translators
+2. Translate text from 11 European languages (110 translation directions)
+3. Evaluate translations, calling it the EuroMatrix (matrix of BLEU scores)
+
+I plan to do the 2nd and 3rd point and use Bertalign to deal with alignments. I adjusted parts of the code that did not work well for me, namely:
 * Replace `googletrans` with `langdetect` to avoid unused code
 * Allow users to provide language as an argument when performing alignment
-* Use `distiluse-base-multilingual-cased-v2` instead of `LaBSE` as for my project, I require it less languages to be supported. Ideally, this should be adjustable by the user as well though.
-
+  * This avoids using `langdetect`and only matters for sentence splitting
+* Use `distiluse-base-multilingual-cased-v2` instead of `LaBSE` as default
+* Make it possible to use the repo locally
+* Provide an easy way to use the repo on Google Colab
+* Allow users to use Bertalign for embeddings on Colab and then align locally
+* 
+* Make it possible to switch encoder model on the fly.
 ## Installation locally:
 ```
 git clone https://github.com/na50r/bertalign
@@ -25,24 +37,35 @@ condacolab.install()
 !pip install bertalign/
 ```
 
-### Alternatively, you can omit the alignment and just use Colab to get the embeddings.
-```
-# Do this in Colab
-with open('EN_TMP.txt', 'r') as f:
+###  Use Colab only for Embeddings
+* Do his on Colab
+```python
+with open('ref/de-en.en', 'r') as f:
     REF = f.read()
 
-with open('EN_Trans1.txt', 'r') as f:
+with open('mt/de-en.en', 'r') as f:
     HYP = f.read()
 
 aligner = Bertalign(
-    src=REF, tgt=HYP, src_lang='en', tgt_lang='en')
+    src=REF, 
+    tgt=HYP, 
+    src_lang='en', 
+    tgt_lang='en')
 
-aligner.store_embeddings(path='EN_TMP_Trans1.npz')
-
-# Do this locally
-aligner = Bertalign(
-    src=REF, tgt=HYP, src_lang='en', tgt_lang='en', load_path='EN_TMP_Trans1.npz')
+aligner.store_embeddings(path='de-en.npz')
 ```
+* Do this on your local machine
+```python
+aligner = Bertalign(
+    src=REF, 
+    tgt=HYP, 
+    src_lang='en',
+    tgt_lang='en', 
+    load_path='de-en.npz')
+```
+
+## Switch Encoders
+
 
 
 # Bertalign
