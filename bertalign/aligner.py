@@ -105,6 +105,14 @@ class Bertalign:
         print("Finished! Successfully aligned {} {} sentences to {} {} sentences\n".format(self.src_num, self.src_lang, self.tgt_num, self.tgt_lang))
         self.result = second_alignment
     
+    def get_sents(self):
+        src_sents = []
+        tgt_sents = []
+        for bead in (self.result):
+            src_sents.append(self._get_line(bead[0], self.src_sents))
+            tgt_sents.append(self._get_line(bead[1], self.tgt_sents))
+        return src_sents, tgt_sents
+    
     def print_sents(self, file=None):
         for bead in (self.result):
             src_line = self._get_line(bead[0], self.src_sents)
