@@ -10,7 +10,7 @@ I plan to do the 2nd and 3rd point and use Bertalign to deal with alignments. I 
 * Replace `googletrans` with `langdetect` to avoid unused code
 * Allow users to provide language as an argument when performing alignment
   * This avoids using `langdetect`and only matters for sentence splitting
-* Use `distiluse-base-multilingual-cased-v2` instead of `LaBSE` as default
+* Use [`distiluse-base-multilingual-cased-v2`](https://huggingface.co/sentence-transformers/distiluse-base-multilingual-cased-v2) instead of `LaBSE` as default
 * Make it possible to use the repo locally
 * Provide an easy way to use the repo on Google Colab
 * Allow users to use Bertalign for embeddings on Colab and then align locally
