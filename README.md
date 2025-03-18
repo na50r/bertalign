@@ -24,6 +24,17 @@ pip install -r bertalign/requirements.txt
 pip install bertalign/
 ```
 
+### For Colab
+* Run this cell before using bertalign
+* If you use GPU on Colab, bertalign will complain due to faiss-gpu not working properly. 
+* It automatically detects the GPU and attempts to use faiss-gpu. 
+* To counter this, we just replace the code that is used to check for GPU existence.
+```py
+import torch
+torch.cuda.is_available = lambda: False
+```
+
+### Usage
 ###  Store & Load Embeddings 
 * Do this on Colab for example
 ```python
@@ -51,7 +62,7 @@ aligner = Bertalign(
     load_path='de-en.npz')
 ```
 
-## Switch Encoders
+### Switch Encoders
 ```python
 from bertalign import Bertalign
 from bertalign import Encoder
@@ -99,6 +110,18 @@ Faust, innit
 
 I am the spirit that always denies!
 Ich bin der Geist, der stets verneint!
+```
+
+### Save as JSONL
+```py
+aligner.save_jsonl(output_path='output/folder/path'),
+                     src_name='src',
+                     tgt_name='ref')
+```
+* Will save a JSONL file in format:
+```json
+{src : "Zwei Seelen wohnen, ach! in meiner Brust.",
+ ref : "Two souls, alas! dwell in my breast."}
 ```
 
 
