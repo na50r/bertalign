@@ -14,31 +14,18 @@ I plan to do the 2nd and 3rd point and use Bertalign to deal with alignments. I 
 * Make it possible to use the repo locally
 * Provide an easy way to use the repo on Google Colab
 * Allow users to use Bertalign for embeddings on Colab and then align locally
-* 
+ 
 * Make it possible to switch encoder model on the fly.
-## Installation locally:
-```
+* NOTE: Initially, installation for Colab was different but issues with faiss-gpu kept happening, hence we keep the same installation as locally, Colab is just faster for encoding sentences.
+## Installation
+```sh
 git clone https://github.com/na50r/bertalign
 pip install -r bertalign/requirements.txt 
 pip install bertalign/
 ```
 
-## Installation on Google Colab
-```
-!git clone https://github.com/na50r/bertalign
-!pip install -r bertalign/requirements_colab.txt 
-```
-```python
-import condacolab
-condacolab.install()
-```
-```
-!mamba install -c pytorch faiss-gpu
-!pip install bertalign/
-```
-
-###  Use Colab only for Embeddings
-* Do his on Colab
+###  Store & Load Embeddings 
+* Do this on Colab for example
 ```python
 with open('ref/de-en.en', 'r') as f:
     REF = f.read()
