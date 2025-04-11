@@ -1,6 +1,7 @@
 import numpy as np
 
 from bertalign import model as default_model
+from bertalign.encoder import Encoder
 from bertalign.corelib import *
 from bertalign.utils import *
 import json
@@ -29,7 +30,8 @@ class Bertalign:
         self.margin = margin
         self.len_penalty = len_penalty
         if model != None:
-            self.model = model
+            self.model = Encoder(model)
+
         else:
             self.model = default_model
         
