@@ -28,7 +28,6 @@ pip install bertalign/
 ### Switch Encoders
 ```python
 from bertalign import Bertalign
-from bertalign import Encoder
 
 de = """
 Zwei Seelen wohnen, ach! in meiner Brust.
@@ -43,12 +42,12 @@ Faust, innit
 I am the spirit that always denies!
 """
 
-my_model = Encoder('paraphrase-multilingual-MiniLM-L12-v2')
 aligner = Bertalign(
         src=en, 
         tgt=de,
         src_lang='en',
         tgt_lang='de',
+        model='paraphrase-multilingual-MiniLM-L12-v2'
         )
 
 aligner.align_sents()
