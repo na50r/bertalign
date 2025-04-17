@@ -1,67 +1,30 @@
 # Fork
-I am considering using Bertalign for a large scale machine translation evaluation project which requires me to align sentences of 11 European languages, similar to  [this paper](https://aclanthology.org/2005.mtsummit-papers.11.pdf)
+I forked the bertalign repo because:
+1. I was unable to run it on my local machine / Google Colab
+2. I wanted it to have some additional functionality convennient for my own project
 
-In the paper the authors:
-1. Build Statistical Machine Translators
-2. Translate text from 11 European languages (110 translation directions)
-3. Evaluate translations, calling it the EuroMatrix (matrix of BLEU scores)
+## Differences
+* My version uses `langdetect` for language detection rather than `googletrans` 
+* My version allows the user to specify the language, no reliance on language detection
+* My version can either use `faiss-cpu` (locally) or `faiss-gpu` (on Google Colab)
+* My version provides the option to retrieve the aligned sentences directly with a `get_sents` methods
+* My version allows the user to change Encoders, no enforcement to use `LaBSE`, can be beneficial if less languages are involved, faster encoders with lower embedding dimension can be used. 
 
-I plan to do the 2nd and 3rd point and use Bertalign to deal with alignments. I adjusted parts of the code that did not work well for me, namely:
-* Replace `googletrans` with `langdetect` to avoid unused code
-* Allow users to provide language as an argument when performing alignment
-  * This avoids using `langdetect`and only matters for sentence splitting
-* Use [`distiluse-base-multilingual-cased-v2`](https://huggingface.co/sentence-transformers/distiluse-base-multilingual-cased-v2) instead of `LaBSE` as default
-* Make it possible to use the repo locally
-* Provide an easy way to use the repo on Google Colab
-* Allow users to use Bertalign for embeddings on Colab and then align locally
- 
-* Make it possible to switch encoder model on the fly.
-* NOTE: Initially, installation for Colab was different but issues with faiss-gpu kept happening, hence we keep the same installation as locally, Colab is just faster for encoding sentences.
-## Installation
+## Installation (local)
 ```sh
 git clone https://github.com/na50r/bertalign
 pip install -r bertalign/requirements.txt 
 pip install bertalign/
 ```
 
-### For Colab
-* Run this cell before using bertalign
-* If you use GPU on Colab, bertalign will complain due to faiss-gpu not working properly. 
-* It automatically detects the GPU and attempts to use faiss-gpu. 
-* To counter this, we just replace the code that is used to check for GPU existence.
-```py
-import torch
-torch.cuda.is_available = lambda: False
+## Installation (Google Colab)
+```sh
+git clone https://github.com/na50r/bertalign
+pip install -r bertalign/requirements_colab.txt 
+pip install bertalign/
 ```
 
-### Usage
-###  Store & Load Embeddings 
-* Do this on Colab for example
-```python
-with open('ref/de-en.en', 'r') as f:
-    REF = f.read()
-
-with open('mt/de-en.en', 'r') as f:
-    HYP = f.read()
-
-aligner = Bertalign(
-    src=REF, 
-    tgt=HYP, 
-    src_lang='en', 
-    tgt_lang='en')
-
-aligner.store_embeddings(path='de-en.npz')
-```
-* Do this on your local machine
-```python
-aligner = Bertalign(
-    src=REF, 
-    tgt=HYP, 
-    src_lang='en',
-    tgt_lang='en', 
-    load_path='de-en.npz')
-```
-
+## Usage 
 ### Switch Encoders
 ```python
 from bertalign import Bertalign
@@ -80,7 +43,7 @@ Faust, innit
 I am the spirit that always denies!
 """
 
-my_model = Encoder('LaBSE')
+my_model = Encoder('paraphrase-multilingual-MiniLM-L12-v2')
 aligner = Bertalign(
         src=en, 
         tgt=de,
