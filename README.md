@@ -60,10 +60,10 @@ The fallen Dahurian larch, now bereft of branches, was ready to be taken away by
 She looked up. It was Bai Mulin. A slender, delicate man who wore glasses, he was a reporter for the Great Production News, the corps’ newspaper. He had arrived the day before yesterday to gather news about her company. Ye remembered reading his articles, which were written in a beautiful style, sensitive and fine, ill suited to the rough-hewn environment."""
 
 aligner = Bertalign(
-        src=en, 
-        tgt=de,
-        src_lang='en',
-        tgt_lang='de',
+        src=src, 
+        tgt=tgt,
+        src_lang='zh',
+        tgt_lang='en',
         model='paraphrase-multilingual-MiniLM-L12-v2'
         )
 
