@@ -3,12 +3,26 @@ I forked the bertalign repo because:
 1. I was unable to run it on my local machine / Google Colab
 2. I wanted it to have some additional functionality convennient for my own project
 
+This code was tested on Python 3.12.6 on local machine
+
 ## Differences
-* My version uses `langdetect` for language detection rather than `googletrans` 
-* My version allows the user to specify the language, no reliance on language detection
-* My version can either use `faiss-cpu` (locally) or `faiss-gpu` (on Google Colab)
-* My version provides the option to retrieve the aligned sentences directly with a `get_sents` methods
-* My version allows the user to change Encoders, no enforcement to use `LaBSE`, can be beneficial if less languages are involved, faster encoders with lower embedding dimension can be used. 
+This version...
+* uses `langdetect` instead of `googletrans`
+* allows the user to specify the language, no reliance on language detection
+* can use `faiss-cpu` (locally) or `faiss-gpu` (on Google Colab)
+* provides the option to retrieve the aligned sentences directly with  `get_sents` 
+* allows the user to change Encoders, no enforcement to use `LaBSE`, can be beneficial if less languages are involved, faster encoders with lower embedding dimension
+
+### Noteworthy
+* Original `requirements.txt` used `faiss-gpu==1.7.2` which does not work anymore, hence I use: `faiss-gpu-cu12` for Google Colab
+* Original `requirements.txt` used `googletrans==4.0.0rc1` which uses older dependencies that conflicted with other packages I needed for my project. 
+    * Newer versions of `googletrans` are asynchronous, so I opted for using `langdetect` instead. 
+    * It may support less languages for language detection than before. 
+* `requirements.txt` here uses newer versions of packages:
+    * numba
+    * faiss-cpu
+    * sentence-transformers
+    * langdetect
 
 ## Installation (local)
 ```sh
@@ -63,6 +77,19 @@ Embedding source and target text using paraphrase-multilingual-MiniLM-L12-v2 ...
 Performing first-step alignment ...
 Performing second-step alignment ...
 Finished! Successfully aligned 21 zh sentences to 32 en sentences
+
+    两年以后，大兴安岭。
+    Two years later, the Greater Khingan Mountains
+    
+    “顺山倒咧——”
+    “Tim-ber…”
+    
+    随着这声嘹亮的号子，一棵如巴特农神庙的巨柱般高大的落叶松轰然倒下，叶文洁感到大地抖动了一下。
+    Following the loud chant, a large Dahurian larch, thick as the columns of the Parthenon, fell with a thump, and Ye Wenjie felt the earth quake.
+    
+    她拿起斧头和短锯，开始去除巨大树身上的枝丫。
+    She picked up her ax and saw and began to clear the branches from the trunk.
+    ...
 ```
 
 ```py
@@ -75,16 +102,14 @@ print(len(cn_sents), len(en_sents))
 
 ### Save as JSONL
 ```py
-aligner.save_jsonl(output_path='output/folder/path'),
-                     src_name='src',
-                     tgt_name='ref')
+aligner.save_jsonl(output_path='output/folder/path',
+                    src_name='src',
+                    tgt_name='ref')
 ```
-* Will save a JSONL file in format:
 ```json
-{src : "Zwei Seelen wohnen, ach! in meiner Brust.",
- ref : "Two souls, alas! dwell in my breast."}
+{src : "两年以后，大兴安岭。", ref : "Two years later, the Greater Khingan Mountains"}
+...
 ```
-
 
 # Bertalign
 
