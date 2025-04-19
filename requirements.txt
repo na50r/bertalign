@@ -1,4 +1,5 @@
 numba==0.61.2
+numpy==1.26.4
 faiss-cpu==1.10.0
 langdetect==1.0.9
 sentence-splitter==1.4
