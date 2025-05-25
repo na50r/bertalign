@@ -109,7 +109,7 @@ class Bertalign:
             self.src_num, self.tgt_num, second_pointers, second_path, second_alignment_types)
 
         print("Finished! Successfully aligned {} {} sentences to {} {} sentences ({})\n".format(
-            self.src_num, self.src_lang, self.tgt_num, self.tgt_lang, len(self.result)))
+            self.src_num, self.src_lang, self.tgt_num, self.tgt_lang, len(second_alignment)))
         self.result = second_alignment
 
     def get_sents(self):
