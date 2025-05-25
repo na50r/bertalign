@@ -20,7 +20,7 @@ class Bertalign:
                  src_lang=None,
                  tgt_lang=None,
                  model=None,
-                 fixed_side=None
+                 fix_side=None
                  ):
 
         self.max_align = max_align
@@ -71,7 +71,7 @@ class Bertalign:
         self.char_ratio = char_ratio
         self.src_vecs = src_vecs
         self.tgt_vecs = tgt_vecs
-        self.fixed_side = fixed_side
+        self.fix_side = fix_side
 
     def align_sents(self):
 
@@ -88,11 +88,11 @@ class Bertalign:
 
         print("Performing second-step alignment ...")
         second_alignment_types = get_alignment_types(self.max_align)
-        if self.fixed_side:
-            assert self.fixed_side == 'src' or 'tgt', 'Please choose between src, tgt or None!'
+        if self.fix_side:
+            assert self.fix_side == 'src' or 'tgt', 'Please choose between src, tgt or None!'
             # If src/tgt selected, bertalign will NOT modify chosen side during alignment process
             # Removes 2-1, 3-1,... or 1-2, 1-3,... respectively
-            if self.fixed_side == 'src':
+            if self.fix_side == 'src':
                 updated_types = [
                     a_type for a_type in second_alignment_types if a_type[0] == 0 or a_type[0] == 1]
             else:
@@ -108,8 +108,8 @@ class Bertalign:
         second_alignment = second_back_track(
             self.src_num, self.tgt_num, second_pointers, second_path, second_alignment_types)
 
-        print("Finished! Successfully aligned {} {} sentences to {} {} sentences\n".format(
-            self.src_num, self.src_lang, self.tgt_num, self.tgt_lang))
+        print("Finished! Successfully aligned {} {} sentences to {} {} sentences ({})\n".format(
+            self.src_num, self.src_lang, self.tgt_num, self.tgt_lang, len(self.result)))
         self.result = second_alignment
 
     def get_sents(self):
