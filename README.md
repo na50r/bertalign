@@ -100,16 +100,7 @@ print(len(cn_sents), len(en_sents))
 21 21
 ```
 
-### Save as JSONL
-```py
-aligner.save_jsonl(output_path='output/folder/path',
-                    src_name='src',
-                    tgt_name='ref')
-```
-```json
-{src : "两年以后，大兴安岭。", ref : "Two years later, the Greater Khingan Mountains"}
-...
-```
+Continues rest of original README
 
 # Bertalign
 
